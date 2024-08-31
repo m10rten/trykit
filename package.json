@@ -1,18 +1,18 @@
 {
-  "name": "tried",
+  "name": "trykit",
   "version": "0.0.0",
   "description": "Simple magic-like utilities to ease your development experience",
   "private": false,
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
-  "homepage": "https://github.com/m10rten/tried#readme",
+  "homepage": "https://github.com/m10rten/trykit#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/m10rten/tried.git"
+    "url": "https://github.com/m10rten/trykit.git"
   },
   "bugs": {
-    "url": "https://github.com/m10rten/tried/issues"
+    "url": "https://github.com/m10rten/trykit/issues"
   },
   "readme": "",
   "scripts": {
