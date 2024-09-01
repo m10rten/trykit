@@ -1,6 +1,6 @@
 import { safetry } from "../src/safe-try";
 
-describe("safe-try", () => {
+describe("safe-try.ts", () => {
   const RESPONSE = 123;
   const ERROR = "Test Error";
   const VALID_PROMISE = new Promise<number>((r) => r(RESPONSE));
