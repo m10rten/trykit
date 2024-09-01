@@ -1,5 +1,11 @@
 # i4n
 
+## 0.1.0
+
+### Minor Changes
+
+- eff9bb2: Added retry function and docs
+
 ## 0.5.1
 
 ### Patch Changes
