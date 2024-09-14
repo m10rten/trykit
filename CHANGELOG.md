@@ -4,4 +4,4 @@
 
 ### Minor Changes
 
-- eff9bb2: Added retry function and docs
+- eff9bb2: Added `safetry` & `retry` function and its docs;
