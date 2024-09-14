@@ -1,6 +1,6 @@
 {
   "name": "trykit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Simple magic-like utilities to ease your development experience",
   "private": false,
   "types": "./dist/index.d.ts",
