@@ -8,14 +8,32 @@ export type SafeTryResult<T> =
       error: Error;
     };
 
-export async function safetry<T>(callback: Promise<T> | (() => Promise<T>)): Promise<SafeTryResult<T>> {
+const awaiter = async <T>(callback: Promise<T> | (() => Promise<T>)): Promise<SafeTryResult<T>> => {
   try {
-    const data = await (callback instanceof Function ? callback() : callback);
     return {
       success: true,
-      data,
+      data: await (callback instanceof Function ? callback() : callback),
     };
-  } catch (error) {
+  } catch (e: unknown) {
+    return { success: false, error: e instanceof Error ? e : new TypeError("Invalid error was thrown") };
+  }
+};
+
+export function safetry<T>(callback: Promise<T> | (() => Promise<T>)): Promise<SafeTryResult<T>>;
+export function safetry<T>(callback: () => T): SafeTryResult<T>;
+export function safetry<T>(
+  callback: Promise<T> | (() => Promise<T>) | (() => T),
+): Promise<SafeTryResult<T>> | SafeTryResult<T> {
+  try {
+    const result = callback instanceof Function ? callback() : callback;
+    if (result instanceof Promise) {
+      return awaiter(result);
+    }
+    return {
+      data: result,
+      success: true,
+    };
+  } catch (error: unknown) {
     if (error instanceof Error) {
       return {
         success: false,

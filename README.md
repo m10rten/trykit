@@ -11,19 +11,20 @@ npm install trykit
 # functions
 
 - `safetry` - call your function without wrapping it in a try-catch block, and check if it throws;
+- `tryparse` - parse data in a schema, without it erroring.
 - `retry` - retry a function n-times;
 
 ## `safetry`
 
-**`safetry<T>(callback: Promise<T> | (() => Promise<T>)): Promise<SafeTryResult<T>>`**
+**`safetry<T>(callback: Promise<T> | (() => Promise<T>) | (() => T)): Promise<SafeTryResult<T>> | SafeTryResult<T>`**
 
 ### parameters
 
-- `callback` - promise like with infered `T`;
+- `callback: Promise<T> | (() => Promise<T> | () => T` - function or promise returntype like with infered `T`;
 
 ### returns
 
-- `SafeTryResult<T>` - result object with `success` property to indicate if there is an error or you can get the data.
+- `SafeTryResult<T>` - result object with `success` property to indicate if there is an error or you can get the data;
 
 ### example
 
@@ -35,13 +36,39 @@ if (!result.success) console.error(result.error.message);
 console.log(result.data);
 ```
 
+## `tryparse`
+
+**`tryparse<T>(schema: TryParseSchema<T>, input: unknown, ...args: unknown[]): SafeTryResult<T>`**
+
+### parameters
+
+- `schema: TryParseSchema<T>` - schema with a `parse` function in it that returns type `T`;
+- `input: unknown` - first argument passed to the `schema.parse` function, use `args` for rest parameters;
+
+### returns
+
+- `SafeTryResult<T>` - see the `safetry` function;
+
+### example
+
+```ts
+import { tryparse } from "trykit";
+
+const zodSchema = z.object({
+  hello: z.string(),
+});
+
+const zodResult = tryparse(zodSchema, { bye: "good day" });
+const jsonResult = tryparse(JSON, jsonString);
+```
+
 ## `retry`
 
 **`retry<T>(callback: Promise<T> | (() => Promise<T>), config?: Partial<RetryConfig>): Promise<SafeTryResult<T>>`**
 
 ### parameters
 
-- `callback: Promise<T> | (() => Promise<T>` - promise like with infered `T`;
+- `callback: Promise<T> | (() => Promise<T> | () => T` - function or promise returntype like with infered `T`;
 - `config?: RetryConfig` - (optional) configuration for the retries of type `RetryConfig`;
 
 **`RetryConfig`**:
@@ -52,7 +79,7 @@ console.log(result.data);
 
 ### returns
 
-- `SafeTryResult<T>` - see the `safetry` function.
+- `SafeTryResult<T>` - see the `safetry` function;
 
 ### example
 

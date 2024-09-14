@@ -1,6 +1,6 @@
 {
   "name": "trykit",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Simple magic-like utilities to ease your development experience",
   "private": false,
   "types": "./dist/index.d.ts",
@@ -50,7 +50,8 @@
     "tsup": "8.2.4",
     "tsx": "4.19.0",
     "typescript": "5.5.4",
-    "typescript-eslint": "8.3.0"
+    "typescript-eslint": "8.3.0",
+    "zod": "3.23.8"
   },
   "exports": {
     ".": {
@@ -63,12 +64,28 @@
       "require": "./dist/safe-try.js",
       "import": "./dist/safe-try.mjs"
     },
+    "./retry": {
+      "types": "./dist/retry.d.ts",
+      "require": "./dist/retry.js",
+      "import": "./dist/retry.mjs"
+    },
+    "./try-parse": {
+      "types": "./dist/try-parse.d.ts",
+      "require": "./dist/try-parse.js",
+      "import": "./dist/try-parse.mjs"
+    },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
       "safe-try": [
         "dist/safe-try.d.ts"
+      ],
+      "retry": [
+        "dist/retry.d.ts"
+      ],
+      "try-parse": [
+        "dist/try-parse.d.ts"
       ]
     }
   },

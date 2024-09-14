@@ -1,4 +1,4 @@
-import { retry } from "../src/retry";
+import { retry } from "@/retry";
 
 describe("retry.ts", () => {
   const NUM_RESPONSE = 123;
