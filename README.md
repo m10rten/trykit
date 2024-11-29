@@ -8,11 +8,13 @@
 npm install trykit
 ```
 
-# functions
+# functions & classes
 
 - `safetry` - call your function without wrapping it in a try-catch block, and check if it throws;
 - `tryparse` - parse data in a schema, without it erroring.
 - `retry` - retry a function n-times;
+- `tryto` - try to execute a function or get a value, otherwise return a given default;
+- `TryWhen` - try to use a value given when it is matching a certain condition, otherwise use given default;
 
 ## `safetry`
 
