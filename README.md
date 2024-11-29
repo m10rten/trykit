@@ -89,3 +89,60 @@ const result = await retry(fetch("/unknown"), { attempts: 5, delay: 50, factor: 
 if (!result.success) console.error(result.error.message);
 console.log(result.data);
 ```
+
+## `TryWhen`
+
+The `TryWhen` class provides a set of static methods for conditional value handling.
+
+### Methods
+
+- `empty<T, D>(input: T, fallback: D): T | D` - Returns fallback if input is null, undefined, or an empty string.
+- `falsy<T, D>(input: T, fallback: D): T | D` - Returns fallback if input is falsy.
+- `truthy<T, D>(input: T, fallback: D): T | D` - Returns fallback if input is not truthy.
+- `nullish<T, D>(input: T, fallback: D): T | D` - Returns fallback if input is null or undefined.
+- `negative<T, D>(input: T, fallback: D): T | D` - Returns fallback if input is a negative number.
+- `zero<T, D>(input: T, fallback: D): T | D` - Returns fallback if input is zero.
+- `array<T, D>(input: T, fallback: D): T | D` - Returns fallback if input is not an array.
+- `positive<T, D>(input: T, fallback: D): T | D` - Returns fallback if input is not a positive number.
+- `function<T, D>(input: T, fallback: D): T | D` - Returns fallback if input is not a function.
+- `object<T, D>(input: T, fallback: D): T | D` - Returns fallback if input is not an object or is null.
+
+### Example
+
+```typescript
+import { TryWhen } from "trykit";
+
+const result1 = TryWhen.empty("", "fallback"); // 'fallback'
+const result2 = TryWhen.positive(-5, 10); // 10
+const result3 = TryWhen.array([1, 2, 3], "not an array"); // [1, 2, 3]
+```
+
+## `tryto`
+
+**`tryto<T, D>(input: (() => T) | T, fallback: D | (() => D)): T | D`**
+
+The `tryto` function attempts to evaluate an input and returns a fallback value if an error occurs.
+
+### Parameters
+
+- `input: (() => T) | T` - A value or a function that returns a value of type T.
+- `fallback: D | (() => D)` - A fallback value or a function that returns a fallback value of type D.
+
+### Returns
+
+- `T | D` - The result of the input evaluation or the fallback value.
+
+### Example
+
+```typescript
+import { tryto } from 'trykit';
+
+const result1 = tryto(() => JSON.parse('{"valid": "json"}'), 'fallback');
+console.log(result1); // { valid: 'json' }
+
+const result2 = tryto(() => JSON.parse('invalid json'), 'fallback');
+console.log(result2); // 'fallback'
+
+const result3 = tryto(() => throw new Error('Oops'), () => 'Error occurred');
+console.log(result3); // 'Error occurred'
+```
