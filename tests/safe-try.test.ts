@@ -9,6 +9,9 @@ describe("safe-try.ts", () => {
   const FAILING_ASYNC = () => {
     throw new Error(ERROR);
   };
+  function NO_ERROR_SYNC() {
+    throw "not an error";
+  }
   const VALID_SYNC = () => RESPONSE;
   const FAILING_SYNC = (): number => {
     throw new Error(ERROR);
@@ -21,6 +24,14 @@ describe("safe-try.ts", () => {
 
     if (result.success) {
       expect(result.data).toBe(RESPONSE);
+    }
+  });
+
+  it("should throw TypeError if the error is not of type Error", async () => {
+    const result = safetry(NO_ERROR_SYNC);
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error).toBeInstanceOf(TypeError);
     }
   });
 
