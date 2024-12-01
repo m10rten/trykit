@@ -7,7 +7,7 @@ export function merge<T extends Record<string, unknown>[]>(...objects: T): Prett
 export function merge<T>(...arrays: T[][]): T[];
 
 // Implementation
-export function merge<T>(...items: T[]) {
+export function merge<T>(...items: (T & {})[]) {
   if (items.length === 0) return {} as T;
 
   if (Array.isArray(items[0])) {
