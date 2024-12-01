@@ -1,5 +1,11 @@
 # trykit
 
+## 0.4.0
+
+### Minor Changes
+
+- 058db15: Added `merge` function and docs;
+
 ## 0.3.0
 
 ### Minor Changes
