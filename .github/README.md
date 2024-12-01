@@ -17,10 +17,11 @@ npm install trykit
 # functions & classes
 
 - `safetry` - call your function without wrapping it in a try-catch block, and check if it throws;
-- `tryparse` - parse data in a schema, without it erroring.
+- `tryparse` - parse data in a schema, without it erroring;
 - `retry` - retry a function n-times;
-- `tryto` - attempt to evaluate an input and return a fallback value if an error occurs
-- `TryWhen` - a class with static methods for conditional value handling
+- `tryto` - attempt to evaluate an input and return a fallback value if an error occurs;
+- `TryWhen` - a class with static methods for conditional value handling;
+- `merge` - function to merge arrays or objects;
 
 ## `safetry`
 
@@ -166,4 +167,27 @@ import { TryWhen } from "trykit";
 const result1 = TryWhen.empty("", "fallback"); // 'fallback'
 const result2 = TryWhen.positive(-5, 10); // 10
 const result3 = TryWhen.array([1, 2], "not an array"); // [1, 2]
+```
+
+## `merge`
+
+Merge objects or arrays with a simple call.
+
+### parameters
+
+- `...entities: T[]` - T being a typed array or object, first argument is used to determine return type.
+
+### returns
+
+- `T` - merged from the entities, the later in the list of entities, the higher priority it has.
+
+### example
+
+```ts
+import { merge } from "trykit";
+
+const object = merge({ a: 1 }, { b: 2 }); // {a: 1, b: 2};
+const overwrite = merge({ a: 1, b: 2 }, { a: 4 }); // {a: 4, b: 2};
+
+const array = merge([2], [1]); // [2, 1];
 ```

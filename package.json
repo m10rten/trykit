@@ -69,6 +69,11 @@
       "require": "./dist/retry.js",
       "import": "./dist/retry.mjs"
     },
+    "./merge": {
+      "types": "./dist/merge.d.ts",
+      "require": "./dist/merge.js",
+      "import": "./dist/merge.mjs"
+    },
     "./try-parse": {
       "types": "./dist/try-parse.d.ts",
       "require": "./dist/try-parse.js",
