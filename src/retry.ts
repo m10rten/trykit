@@ -22,10 +22,10 @@ export async function retry<T>(callback: Promise<T> | (() => Promise<T>), config
     const _delay = current === 1 ? _config.delay : _config.delay * current * _config.factor;
     await new Promise((r) => setTimeout(r, _delay));
     result = await safetry(callback);
-    if (result.success) return result;
+    if (result.success) break;
     current += 1;
     if (current >= _config.attempts) {
-      return result;
+      break;
     }
   } while (current < _config.attempts);
   return result;

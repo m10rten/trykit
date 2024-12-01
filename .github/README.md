@@ -22,6 +22,7 @@ npm install trykit
 - `tryto` - attempt to evaluate an input and return a fallback value if an error occurs;
 - `TryWhen` - a class with static methods for conditional value handling;
 - `merge` - function to merge arrays or objects;
+- `snag` - a function to easily chain error handling;
 
 ## `safetry`
 
@@ -190,4 +191,53 @@ const object = merge({ a: 1 }, { b: 2 }); // {a: 1, b: 2};
 const overwrite = merge({ a: 1, b: 2 }, { a: 4 }); // {a: 4, b: 2};
 
 const array = merge([2], [1]); // [2, 1];
+```
+
+## `snag`
+
+A lightweight, chainable error handling utility for Promises in TypeScript.
+
+The `snag` function provide a fluent interface for handling specific error types in Promise-based operations. This utility allows you to define custom error handlers for different error classes, making error management more structured and readable.
+
+### parameters
+
+- `promise` - A function that returns a Promise or a value. This is the main operation you want to execute.
+- `errorType` - The class of the error you want to handle (e.g., `Error`, `TypeError`).
+- `handler`: A function that takes an error of the specified type and handles it.
+
+### returns
+
+- `snag` returns a `Snag` class instance.
+- `execute`, `run`, and `go` methods return a Promise that resolves to:
+  - The result of the original promise if successful.
+  - The return value of the error handler if an error is caught and handled.
+  - `void` if the error handler doesn't return a value.
+
+### example
+
+```ts
+import { snag } from "trykit";
+
+class DatabaseError extends Error {}
+class NetworkError extends Error {}
+
+const fetchData = async (id: string): Promise<string> => {
+  // Simulated async operation that might throw
+  if (id === "invalid") throw new DatabaseError("Invalid ID");
+  if (id === "network") throw new NetworkError("Connection failed");
+  return `Data for ${id}`;
+};
+
+const result = await snag(fetchData)
+  .on(DatabaseError, (err) => {
+    console.error("Database error:", err.message);
+    return "Using cached data";
+  })
+  .on(NetworkError, (err) => {
+    console.error("Network error:", err.message);
+    return "Offline mode activated";
+  })
+  .execute("some-id");
+
+console.log(result);
 ```

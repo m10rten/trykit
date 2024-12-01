@@ -74,6 +74,11 @@
       "require": "./dist/merge.js",
       "import": "./dist/merge.mjs"
     },
+    "./snag": {
+      "types": "./dist/snag.d.ts",
+      "require": "./dist/snag.js",
+      "import": "./dist/snag.mjs"
+    },
     "./try-parse": {
       "types": "./dist/try-parse.d.ts",
       "require": "./dist/try-parse.js",

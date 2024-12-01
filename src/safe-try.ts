@@ -20,9 +20,11 @@ const awaiter = async <T>(callback: Promise<T> | (() => Promise<T>)): Promise<Sa
 };
 
 export function safetry<T>(callback: Promise<T> | (() => Promise<T>)): Promise<SafeTryResult<T>>;
-export function safetry<T>(callback: () => T): SafeTryResult<T>;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+export function safetry<T>(callback: (() => T) | Function): SafeTryResult<T>;
 export function safetry<T>(
-  callback: Promise<T> | (() => Promise<T>) | (() => T),
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  callback: Promise<T> | (() => Promise<T>) | (() => T) | Function,
 ): Promise<SafeTryResult<T>> | SafeTryResult<T> {
   try {
     const result = callback instanceof Function ? callback() : callback;

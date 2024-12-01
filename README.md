@@ -16,6 +16,7 @@ npm install trykit
 - `tryto` - try to execute a function or get a value, otherwise return a given default;
 - `TryWhen` - try to use a value given when it is matching a certain condition, otherwise use given default;
 - `merge` - a function to easily merge different objects or arrays (not both) into 1 variable;
+- `snag` - a function to easily chain error handling with builder-like pattern;
 
 ## `safetry`
 
@@ -172,3 +173,24 @@ const overwrite = merge({ a: 1, b: 2 }, { a: 4 }); // {a: 4, b: 2};
 
 const array = merge([2], [1]); // [2, 1];
 ```
+
+# `snag`
+
+Lightweight, chainable error handling for Promises in TypeScript.
+
+## example
+
+```ts
+import { snag } from "trykit";
+
+const result = await snag(fetchData)
+  .on(DatabaseError, handleDatabaseError)
+  .on(NetworkError, handleNetworkError)
+  .execute("id");
+```
+
+### usage
+
+- `snag(promise)`: Wrap a promise or function;
+- `.on(ErrorType, handler)`: Define error handlers;
+- `.execute(...args: any[])`: Run the operation, with or without arguments;

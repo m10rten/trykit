@@ -54,6 +54,14 @@ describe("safe-try.ts", () => {
     }
   });
 
+  it("should work for function class", async () => {
+    const result = safetry(new Function());
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data).toBe(undefined);
+    }
+  });
+
   it("should test if a valid async function is being handled", async () => {
     const result = await safetry(VALID_ASYNC);
 
