@@ -1,5 +1,11 @@
 # trykit
 
+## 0.5.0
+
+### Minor Changes
+
+- 862691c: Added `snag` function and class, removed comments on output and 100% test coverage;
+
 ## 0.4.0
 
 ### Minor Changes
