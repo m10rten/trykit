@@ -23,3 +23,4 @@ export type ReturnTypeOf<T> = T extends Promise<infer p> | ((...args: any[]) => 
   : T;
 
 export type ExpectFuncion<Args extends any[], Output> = (...args: Args) => Output | Promise<Output>;
+export type Arguments<T extends ExpectFuncion<any[], any>> = T extends (...args: infer Args) => any ? Args : never;

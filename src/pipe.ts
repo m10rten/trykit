@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { ExpectFuncion, IsPromise, ReturnTypeOf } from "./types";
+import type { Arguments, ExpectFuncion, IsPromise, ReturnTypeOf } from "./types";
 
 abstract class BasePipeline<Args extends any[], Return, Func extends ExpectFuncion<Args, Return>> {
   protected _actions: ExpectFuncion<any[], any>[];
@@ -47,7 +47,7 @@ class AsyncPipeline<Args extends any[], Return, Func extends ExpectFuncion<Args,
     return new AsyncPipeline(this.initialAction) as this;
   }
 
-  async execute(...args: Args): Promise<ReturnTypeOf<Func>> {
+  async execute(...args: Arguments<typeof this.initialAction>): Promise<ReturnTypeOf<Func>> {
     return this.executeInternal(args, 0);
   }
 }
@@ -61,12 +61,12 @@ export class Pipeline<Args extends any[], Return, Func extends ExpectFuncion<Arg
     return new Pipeline(this.initialAction) as this;
   }
 
-  execute(...args: Args): ReturnTypeOf<Func> {
+  execute(...args: Arguments<typeof this.initialAction>): ReturnTypeOf<Func> {
     return this.executeInternal(args, 0);
   }
 }
 
 // Helper function to create a pipeline
-export function pipeline<F extends ExpectFuncion<any[], any>>(originalAction: F) {
+export function pipeline<Args extends any[], Return, F extends ExpectFuncion<Args, Return>>(originalAction: F) {
   return new Pipeline(originalAction);
 }
