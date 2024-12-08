@@ -4,9 +4,10 @@ describe("merge function", () => {
   // Tests for merging objects
   describe("merging objects", () => {
     it("should merge two simple objects", () => {
-      const obj1 = { a: 1, b: 2 };
+      const obj1 = { a: 1, b: 2 } as const;
       const obj2 = { c: 3, d: 4 };
-      expect(merge(obj1, obj2)).toEqual({ a: 1, b: 2, c: 3, d: 4 });
+      const result = merge(obj1, obj2);
+      expect(result).toEqual({ a: 1, b: 2, c: 3, d: 4 });
     });
 
     it("should override properties in the first object with those from the second", () => {

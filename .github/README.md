@@ -1,42 +1,44 @@
 [![NPM Version](https://img.shields.io/npm/v/trykit?style=flat-square?labelColor=black&color=navy)](https://npmjs.com/trykit/)
 [![NPM Downloads](https://img.shields.io/npm/d18m/trykit?style=flat-square?labelColor=black&color=navy)](https://npmjs.com/trykit/)
 [![NPM License](https://img.shields.io/npm/l/trykit?style=flat-square?labelColor=black&color=navy)](https://npmjs.com/trykit/)
-[![npm bundle size](https://img.shields.io/bundlephobia/minzip/trykit?style=flat-square?labelColor=black&color=navy)](https://npmjs.com/trykit/)
-[![NPM Type Definitions](https://img.shields.io/npm/types/trykit?style=flat-square?labelColor=black&color=navy)](https://npmjs.com/trykit/)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/trykit?style=flat-square&labelColor=black&color=navy)](https://npmjs.com/trykit/)
+[![Type Definitions](https://img.shields.io/npm/types/trykit?style=flat-square&labelColor=black&color=navy)](https://npmjs.com/trykit/)
 
-# trykit
+# trykit 🪄🪖
 
-🪄🪖 Simple magic-like utilities to ease your development experience.
+Simple magic-like utilities to ease your development experience.
 
-# installation
+## Installation
 
 ```bash
 npm install trykit
 ```
 
-# functions & classes
+---
 
-- `safetry` - call your function without wrapping it in a try-catch block, and check if it throws;
-- `tryparse` - parse data in a schema, without it erroring;
-- `retry` - retry a function n-times;
-- `tryto` - attempt to evaluate an input and return a fallback value if an error occurs;
-- `TryWhen` - a class with static methods for conditional value handling;
-- `merge` - function to merge arrays or objects;
-- `snag` - a function to easily chain error handling;
+## Functions & Classes
 
-## `safetry`
+- **`safetry`**: Call a function without wrapping in `try-catch`. Detects and handles errors.
+- **`tryparse`**: Parse data with a schema without throwing.
+- **`retry`**: Retry a function up to `n` times.
+- **`tryto`**: Evaluate input with fallback on error.
+- **`TryWhen`**: Conditional value handling class.
+- **`merge`**: Merge arrays or objects.
+- **`snag`**: Chainable error-handling for promises.
+- **`pipeline`**: Chain and execute multiple functions.
 
-**`safetry<T>(callback: Promise<T> | (() => Promise<T>) | (() => T)): Promise<SafeTryResult<T>> | SafeTryResult<T>`**
+---
 
-### parameters
+### `safetry`
 
-- `callback: Promise<T> | (() => Promise<T> | () => T` - function or promise returntype like with infered `T`;
+**`safetry<T>(callback: Promise<T> | (() => Promise<T>) | (() => T)): SafeTryResult<T>`**
 
-### returns
+- **Parameters**:
+  - `callback`: Function or promise to execute.
+- **Returns**:
+  - `SafeTryResult<T>` with `success` flag and result or error.
 
-- `SafeTryResult<T>` - result object with `success` property to indicate if there is an error or you can get the data;
-
-### example
+**Example**:
 
 ```ts
 import { safetry } from "trykit";
@@ -46,198 +48,149 @@ if (!result.success) console.error(result.error.message);
 console.log(result.data);
 ```
 
-## `tryparse`
+---
+
+### `tryparse`
 
 **`tryparse<T>(schema: TryParseSchema<T>, input: unknown, ...args: unknown[]): SafeTryResult<T>`**
 
-### parameters
+- **Parameters**:
+  - `schema`: Schema with a `parse` method.
+  - `input`: Data to parse.
+- **Returns**:
+  - `SafeTryResult<T>` with parsed data or error.
 
-- `schema: TryParseSchema<T>` - schema with a `parse` function in it that returns type `T`;
-- `input: unknown` - first argument passed to the `schema.parse` function, use `args` for rest parameters;
-
-### returns
-
-- `SafeTryResult<T>` - see the `safetry` function;
-
-### example
+**Example**:
 
 ```ts
 import { tryparse } from "trykit";
 
-const zodSchema = z.object({
-  hello: z.string(),
-});
-
+const zodSchema = z.object({ hello: z.string() });
 const zodResult = tryparse(zodSchema, { bye: "good day" });
-const jsonResult = tryparse(JSON, jsonString);
 ```
 
-## `retry`
+---
 
-**`retry<T>(callback: Promise<T> | (() => Promise<T>), config?: Partial<RetryConfig>): Promise<SafeTryResult<T>>`**
+### `retry`
 
-### parameters
+**`retry<T>(callback: Promise<T> | (() => Promise<T>), config?: RetryConfig): SafeTryResult<T>`**
 
-- `callback: Promise<T> | (() => Promise<T> | () => T` - function or promise returntype like with infered `T`;
-- `config?: RetryConfig` - (optional) configuration for the retries of type `RetryConfig`;
+- **Parameters**:
+  - `callback`: Function or promise to retry.
+  - `config`: Retry settings (`attempts`, `delay`, `factor`).
+- **Returns**:
+  - `SafeTryResult<T>` with final result or error.
 
-**`RetryConfig`**:
-
-- `attempts?: number` - (optional) number of times the callback can be called before returning the error;
-- `delay?: number` - (optional) delay in milliseconds to wait for the next iteration;
-- `factor?: number` - (optional) multiply the delay with a factor (default 2);
-
-### returns
-
-- `SafeTryResult<T>` - see the `safetry` function;
-
-### example
+**Example**:
 
 ```ts
-const result = await retry(fetch("/unknown"), { attempts: 5, delay: 50, factor: 1 });
-
+const result = await retry(fetch("/unknown"), { attempts: 5, delay: 50 });
 if (!result.success) console.error(result.error.message);
 console.log(result.data);
 ```
 
-## `tryto`
+---
+
+### `tryto`
 
 **`tryto<T, D>(input: (() => T) | T, fallback: D | (() => D)): T | D`**
 
-### parameters
+- **Parameters**:
+  - `input`: Value or function to evaluate.
+  - `fallback`: Fallback value or function.
+- **Returns**:
+  - `T | D` (result or fallback).
 
-- `input: (() => T) | T` - A value or a function that returns a value of type T.
-- `fallback: D | (() => D)` - A fallback value or a function that returns a fallback value of type D.
-
-### returns
-
-- `T | D` - The result of evaluating the input or the fallback value if an error occurs.
-
-### example
+**Example**:
 
 ```ts
 import { tryto } from "trykit";
 
-const result1 = tryto(() => JSON.parse('{"valid": "json"}'), "fallback");
-console.log(result1); // { valid: 'json' }
-
-const result2 = tryto(() => JSON.parse("invalid json"), "fallback");
-console.log(result2); // 'fallback'
-
-const result3 = tryto(
-  () => {
-    throw new Error("Oops");
-  },
-  () => "Error occurred",
-);
-console.log(result3); // 'Error occurred'
+const result = tryto(() => JSON.parse("invalid json"), "fallback");
+console.log(result); // 'fallback'
 ```
 
-## `TryWhen`
+---
 
-The `TryWhen` class provides static methods for conditional value handling.
+### `TryWhen`
 
-### Methods
+Static class for conditional value handling.
 
-- **`empty<T, D>(input: T, fallback: D): Condition<T, Empty<T>, D>`**
-  - Returns fallback if input is null, undefined, or an empty string.
-- **`falsy<T, D>(input: T, fallback: D): Condition<T, Falsy<T>, D>`**
-  - Returns fallback if input is falsy.
-- **`truthy<T, D>(input: T, fallback: D): Condition<T, Truthy<T>, D>`**
-  - Returns fallback if input is not truthy.
-- **`nullish<T, D>(input: T, fallback: D): Condition<T, Nullish<T>, D>`**
-  - Returns fallback if input is null or undefined.
-- **`negative<T, D>(input: T, fallback: D): Condition<T, Negative<T>, D>`**
-  - Returns fallback if input is a negative number.
-- **`zero<T, D>(input: T, fallback: D): Condition<T, Zero<T>, D>`**
-  - Returns fallback if input is zero.
-- **`array<T, D>(input: T, fallback: D): Condition<T, Array<T>, D>`**
-  - Returns fallback if input is not an array.
-- **`positive<T, D>(input: T, fallback: D): Condition<T, Positive<T>, D>`**
-  - Returns fallback if input is not a positive number.
-- **`function<T, D>(input: T, fallback: D): Condition<T, Function, D>`**
-  - Returns fallback if input is not a function.
-- **`object<T, D>(input: T, fallback: D): Condition<T, Object<T>, D>`**
-  - Returns fallback if input is not an object or is null.
+**Methods**:
 
-### Example
+- **`empty`**: Fallback if `input` is empty (`null`, `undefined`, or `""`).
+- **`positive`**: Fallback if `input` is not a positive number.
+- **`array`**: Fallback if `input` is not an array.
+
+**Example**:
 
 ```ts
 import { TryWhen } from "trykit";
 
-const result1 = TryWhen.empty("", "fallback"); // 'fallback'
-const result2 = TryWhen.positive(-5, 10); // 10
-const result3 = TryWhen.array([1, 2], "not an array"); // [1, 2]
+const result = TryWhen.positive(-5, 10); // 10
 ```
 
-## `merge`
+---
 
-Merge objects or arrays with a simple call.
+### `merge`
 
-### parameters
+Merge objects or arrays.
 
-- `...entities: T[]` - T being a typed array or object, first argument is used to determine return type.
+**Parameters**:
 
-### returns
+- `...entities`: Multiple arrays or objects to combine.
 
-- `T` - merged from the entities, the later in the list of entities, the higher priority it has.
+**Returns**:
 
-### example
+- Merged object or array.
+
+**Example**:
 
 ```ts
 import { merge } from "trykit";
 
 const object = merge({ a: 1 }, { b: 2 }); // {a: 1, b: 2};
-const overwrite = merge({ a: 1, b: 2 }, { a: 4 }); // {a: 4, b: 2};
-
-const array = merge([2], [1]); // [2, 1];
 ```
 
-## `snag`
+---
 
-A lightweight, chainable error handling utility for Promises in TypeScript.
+### `pipeline`
 
-The `snag` function provide a fluent interface for handling specific error types in Promise-based operations. This utility allows you to define custom error handlers for different error classes, making error management more structured and readable.
+Chain multiple synchronous or asynchronous functions.
 
-### parameters
+- **Methods**:
+  - `.pipe`: Add functions to the chain.
+  - `.execute`: Run the chain.
 
-- `promise` - A function that returns a Promise or a value. This is the main operation you want to execute.
-- `errorType` - The class of the error you want to handle (e.g., `Error`, `TypeError`).
-- `handler`: A function that takes an error of the specified type and handles it.
+**Example**:
 
-### returns
+```ts
+import { pipeline } from "trykit";
 
-- `snag` returns a `Snag` class instance.
-- `execute`, `run`, and `go` methods return a Promise that resolves to:
-  - The result of the original promise if successful.
-  - The return value of the error handler if an error is caught and handled.
-  - `void` if the error handler doesn't return a value.
+const result = pipeline((n) => n + 1)
+  .pipe((n) => n * 2)
+  .execute(5);
+console.log(result); // 12
+```
 
-### example
+---
+
+### `snag`
+
+Chainable error handling utility.
+
+- **Parameters**:
+  - `promise`: Operation to execute.
+  - `errorType`: Specific error class to catch.
+  - `handler`: Function to handle the error.
+
+**Example**:
 
 ```ts
 import { snag } from "trykit";
 
 class DatabaseError extends Error {}
-class NetworkError extends Error {}
-
-const fetchData = async (id: string): Promise<string> => {
-  // Simulated async operation that might throw
-  if (id === "invalid") throw new DatabaseError("Invalid ID");
-  if (id === "network") throw new NetworkError("Connection failed");
-  return `Data for ${id}`;
-};
-
 const result = await snag(fetchData)
-  .on(DatabaseError, (err) => {
-    console.error("Database error:", err.message);
-    return "Using cached data";
-  })
-  .on(NetworkError, (err) => {
-    console.error("Network error:", err.message);
-    return "Offline mode activated";
-  })
+  .on(DatabaseError, (err) => "Cached Data")
   .execute("some-id");
-
-console.log(result);
 ```

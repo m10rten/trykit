@@ -79,6 +79,11 @@
       "require": "./dist/snag.js",
       "import": "./dist/snag.mjs"
     },
+    "./pipe": {
+      "types": "./dist/pipe.d.ts",
+      "require": "./dist/pipe.js",
+      "import": "./dist/pipe.mjs"
+    },
     "./try-parse": {
       "types": "./dist/try-parse.d.ts",
       "require": "./dist/try-parse.js",
