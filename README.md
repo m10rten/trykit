@@ -80,6 +80,27 @@ console.log(result.data);
 
 ---
 
+### `pipeline`
+
+Chain multiple synchronous or asynchronous functions.
+
+- **Methods**:
+  - `.pipe`: Add functions to the chain.
+  - `.execute`: Run the chain.
+
+**Example**:
+
+```ts
+import { pipeline } from "trykit";
+
+const result = pipeline((n) => n + 1)
+  .pipe((n) => n * 2)
+  .execute(5);
+console.log(result); // 12
+```
+
+---
+
 ### `tryto`
 
 Attempts execution and provides fallback on error.
