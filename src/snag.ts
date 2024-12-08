@@ -20,17 +20,15 @@ class Snag<T, Args extends any[]> {
   async execute(...args: Args): Promise<T | void> {
     const result = await safetry(this.promise(...args));
     if (result.success) return result.data;
-    else {
-      const error = result.error;
-      if (error instanceof Error) {
-        for (const [ErrorClass, handler] of this.handlers.entries()) {
-          if (error instanceof ErrorClass) {
-            return handler(error);
-          }
+    const error = result.error;
+    if (error instanceof Error) {
+      for (const [ErrorClass, handler] of this.handlers.entries()) {
+        if (error instanceof ErrorClass) {
+          return handler(error);
         }
       }
-      throw error; // Re-throw if no handler matched
     }
+    throw error; // Re-throw if no handler matched
   }
 
   // Aliases for execute

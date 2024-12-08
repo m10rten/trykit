@@ -27,7 +27,7 @@ export function safetry<T>(
   callback: Promise<T> | (() => Promise<T>) | (() => T) | Function,
 ): Promise<SafeTryResult<T>> | SafeTryResult<T> {
   try {
-    const result = callback instanceof Function ? callback() : callback;
+    const result = typeof callback === "function" || callback instanceof Function ? callback() : callback;
     if (result instanceof Promise) {
       return awaiter(result);
     }
