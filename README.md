@@ -16,6 +16,12 @@ npm install trykit
 
 ---
 
+## Documentation
+
+For more in depth documentation about the features, check out [the full docs](https://github.com/m10rten/trykit/tree/main/docs).
+
+---
+
 ## Features
 
 ### Functions and Classes

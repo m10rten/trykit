@@ -12,6 +12,9 @@ type Array<T> = T extends (infer _)[] ? T : never;
 type Object<T> = T extends object ? (T extends null ? never : T) : never;
 type Function = (...args: unknown[]) => unknown;
 
+/**
+ * @deprecated - This will be removed in a later version.
+ */
 export class TryWhen {
   static empty<T, D>(input: T, fallback: D): Condition<T, Empty<T>, D> {
     return (input === null || input === undefined || input === "" ? fallback : input) as Condition<T, Empty<T>, D>;
