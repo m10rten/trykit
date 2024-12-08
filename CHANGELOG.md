@@ -1,5 +1,11 @@
 # trykit
 
+## 0.6.0
+
+### Minor Changes
+
+- ffca134: Added `pipe` functionality with `pipeline` function and `Pipeline` class, full type differences and easy interface. Updated docs accordingly and reduced docs output size;
+
 ## 0.5.0
 
 ### Minor Changes
