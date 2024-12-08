@@ -1,5 +1,11 @@
 # trykit
 
+## 0.6.1
+
+### Patch Changes
+
+- 5ad1d0d: Updated types for `pipe` to have infered arguments for the initial step;
+
 ## 0.6.0
 
 ### Minor Changes
