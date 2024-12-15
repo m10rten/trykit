@@ -1,5 +1,11 @@
 # trykit
 
+## 0.7.0
+
+### Minor Changes
+
+- 2984b5b: Remove `TryWhen`, moved `merge` into 'snap-ts' package.
+
 ## 0.6.1
 
 ### Patch Changes
