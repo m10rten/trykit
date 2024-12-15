@@ -30,8 +30,6 @@ For more in depth documentation about the features, check out [the full docs](ht
 - **`tryparse`**: Parses data against a schema, returning errors safely.
 - **`retry`**: Retries a function multiple times with optional delay.
 - **`tryto`**: Evaluates an input with fallback for errors.
-- **`TryWhen`**: Static methods for conditional value handling.
-- **`merge`**: Combines objects or arrays.
 - **`snag`**: Chainable error handling for Promises.
 - **`pipeline`**: Chain and execute multiple functions.
 
@@ -118,34 +116,6 @@ import { tryto } from "trykit";
 
 const result = tryto(() => JSON.parse('{"valid": "json"}'), "fallback");
 console.log(result);
-```
-
----
-
-### `TryWhen`
-
-Static methods for conditional handling.
-
-**Usage**:
-
-```ts
-import { TryWhen } from "trykit";
-
-const result = TryWhen.empty("", "fallback"); // 'fallback'
-```
-
----
-
-### `merge`
-
-Combines objects or arrays.
-
-**Usage**:
-
-```ts
-import { merge } from "trykit";
-
-const combined = merge({ a: 1 }, { b: 2 }); // { a: 1, b: 2 }
 ```
 
 ---

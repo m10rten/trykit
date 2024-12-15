@@ -37,12 +37,12 @@
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "2.27.10",
-    "@eslint/js": "9.16.0",
+    "@eslint/js": "9.17.0",
     "@ianvs/prettier-plugin-sort-imports": "4.4.0",
     "@types/eslint__js": "8.42.3",
     "@types/jest": "29.5.14",
-    "@types/node": "22.10.1",
-    "eslint": "9.16.0",
+    "@types/node": "22.10.2",
+    "eslint": "9.17.0",
     "husky": "9.1.7",
     "jest": "29.7.0",
     "ts-jest": "29.2.5",
@@ -51,7 +51,7 @@
     "tsx": "4.19.2",
     "typescript": "5.7.2",
     "typescript-eslint": "8.18.0",
-    "zod": "3.23.8"
+    "zod": "3.24.1"
   },
   "exports": {
     ".": {
@@ -68,11 +68,6 @@
       "types": "./dist/retry.d.ts",
       "require": "./dist/retry.js",
       "import": "./dist/retry.mjs"
-    },
-    "./merge": {
-      "types": "./dist/merge.d.ts",
-      "require": "./dist/merge.js",
-      "import": "./dist/merge.mjs"
     },
     "./snag": {
       "types": "./dist/snag.d.ts",
@@ -106,6 +101,15 @@
       ],
       "try-parse": [
         "dist/try-parse.d.ts"
+      ],
+      "try-to": [
+        "dist/try-to.d.ts"
+      ],
+      "pipe": [
+        "dist/pipe.d.ts"
+      ],
+      "snag": [
+        "dist/snag.d.ts"
       ]
     }
   },
