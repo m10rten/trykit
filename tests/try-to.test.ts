@@ -1,6 +1,6 @@
-import { tryto } from "@/try-to";
+import { tryto } from "../src/try-to.js";
 
-describe("tryto", () => {
+describe("tryto.ts", () => {
   // Test 1: Basic successful case with direct values
   it("returns input when it is a non-function value", () => {
     expect(tryto("hello", "fallback")).toBe("hello");

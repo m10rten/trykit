@@ -1,4 +1,4 @@
-import { Pipeline, pipeline } from "@/pipe";
+import { Pipeline, pipeline } from "../src/pipe.js";
 
 // Reusable test functions
 const add1 = (n: number) => n + 1;

@@ -1,4 +1,4 @@
-import { safetry, type SafeTryResult } from "./safe-try";
+import { safetry, type SafeTryResult } from "./safe-try.js";
 
 export type TryParseSchema<T> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

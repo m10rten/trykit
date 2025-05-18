@@ -1,4 +1,4 @@
-import { safetry } from "@/safe-try";
+import { safetry } from "../src/safe-try.js";
 
 describe("safe-try.ts", () => {
   const RESPONSE = 123;

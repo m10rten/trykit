@@ -1,4 +1,4 @@
-import { safetry } from "./safe-try";
+import { safetry } from "./safe-try.js";
 
 export type RetryConfig = {
   attempts?: number;

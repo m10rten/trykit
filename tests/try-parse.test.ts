@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-import { tryparse } from "@/try-parse";
+import { tryparse } from "../src/try-parse.js";
 
-describe("tryparse", () => {
+describe("tryparse.ts", () => {
   describe("zod", () => {
     const schema = z.object({
       hello: z.string(),

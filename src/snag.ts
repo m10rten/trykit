@@ -1,4 +1,4 @@
-import { safetry } from "./safe-try";
+import { safetry } from "./safe-try.js";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ErrorConstructor = new (...args: any[]) => Error;

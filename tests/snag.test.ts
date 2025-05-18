@@ -1,6 +1,6 @@
-import { snag } from "@/snag"; // Replace with the actual file name
+import { snag } from "../src/snag.js";
 
-describe("SnagQuery", () => {
+describe("snag.ts", () => {
   // Test successful promise execution
   it("should resolve with the correct value", async () => {
     const query = snag(() => Promise.resolve("success"));
