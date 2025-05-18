@@ -1,5 +1,11 @@
 # trykit
 
+## 0.7.1
+
+### Patch Changes
+
+- 6ca219b: Update dependencies and changed type to module
+
 ## 0.7.0
 
 ### Minor Changes
